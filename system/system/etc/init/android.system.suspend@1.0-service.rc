@@ -1,0 +1,6 @@
+service system_suspend /system/bin/hw/android.system.suspend@1.0-service
+    class early_hal
+    user system
+    group system wakelock
+    capabilities BLOCK_SUSPEND
+    writepid /dev/cpuset/power-daemon/tasks
