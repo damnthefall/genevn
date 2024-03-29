@@ -1,0 +1,64 @@
+{
+  "config": {
+    "hw_platform": ["HDK", "MTP", "Dragon", "Surf", "IDP", "QRD"],
+    "soc_id": ["537"],
+    "panel": ["csot_nt36672c_660_1080x2400_dsc_vid_120hz"]
+  },
+  "stk3acx_0_private":{
+    "owner": "sns_stk3acx",
+    ".als_coefficient":{
+      "owner": "sns_stk3acx",
+      "als_offset":{ "type": "int", "ver": "0",
+        "data": "5"
+      },
+      "ratio_c":{ "type": "int", "ver": "0",
+        "data": "1"
+      },
+      "ratio_d":{ "type": "int", "ver": "0",
+        "data": "120"
+      },
+      "ratio_a":{ "type": "int", "ver": "0",
+        "data": "280"
+      },
+      "window_c":{ "type": "flt", "ver": "0",
+        "data": "1.0"
+      },
+      "window_d":{ "type": "flt", "ver": "0",
+        "data": "0.44"
+      },
+      "window_a":{ "type": "flt", "ver": "0",
+        "data": "0.19"
+      },
+      "window_h":{ "type": "flt", "ver": "0",
+        "data": "0.13"
+      },
+      "min_c_data":{ "type": "int", "ver": "0",
+        "data": "50"
+      },
+      "min_g_data":{ "type": "int", "ver": "0",
+        "data": "20"
+      },
+      "max_als_data":{ "type": "int", "ver": "0",
+        "data": "64000"
+      },
+      "min_als_data":{ "type": "int", "ver": "0",
+        "data": "1500"
+      },
+      "ratio_h":{ "type": "int", "ver": "0",
+        "data": "437"
+      },
+      "ratio_sun":{ "type": "int", "ver": "0",
+        "data": "40"
+      },
+      "window_sun":{ "type": "flt", "ver": "0",
+        "data": "0.78"
+      },
+      "window_clear":{ "type": "flt", "ver": "0",
+        "data": "0.0"
+      },
+      "flag_opt":{ "type": "int", "ver": "0",
+        "data": "0"
+      }
+    }
+  }
+}

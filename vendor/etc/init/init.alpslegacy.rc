@@ -1,0 +1,4 @@
+service trustonic-alps-daemon_proxy /vendor/bin/rsudaemon_proxy
+    class core
+    user system
+    group system

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) 2016, The Linux Foundation. All rights reserved.
+
+     Not a Contribution.
+
+     Copyright 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<MediaCodecs>
+    <Encoders>
+        <MediaCodec name="c2.android.avc.encoder" type="video/avc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="232-271" />
+            <Limit name="measured-frame-rate-720x480" range="91-109" />
+            <Limit name="measured-frame-rate-1280x720" range="58-69" />
+            <Limit name="measured-frame-rate-1920x1080" range="38-44" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.h263.encoder" type="video/3gpp" update="true">
+            <Limit name="measured-frame-rate-176x144" range="314-354" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.hevc.encoder" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="33-40" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.mpeg4.encoder" type="video/mp4v-es" update="true">
+            <Limit name="measured-frame-rate-176x144" range="314-352" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.vp8.encoder" type="video/x-vnd.on2.vp8" update="true">
+            <Limit name="measured-frame-rate-320x180" range="232-242" />
+            <Limit name="measured-frame-rate-640x360" range="160-163" />
+            <Limit name="measured-frame-rate-1280x720" range="47-48" />
+            <Limit name="measured-frame-rate-1920x1080" range="38-38" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.avc.encoder" type="video/avc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="215-223" />
+            <Limit name="measured-frame-rate-720x480" range="115-131" />
+            <Limit name="measured-frame-rate-1280x720" range="56-56" />
+            <Limit name="measured-frame-rate-1920x1080" range="43-44" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.hevc.encoder" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="216-223" />
+            <Limit name="measured-frame-rate-720x480" range="111-124" />
+            <Limit name="measured-frame-rate-1280x720" range="60-61" />
+            <Limit name="measured-frame-rate-1920x1080" range="48-49" />
+            <Limit name="measured-frame-rate-3840x2160" range="22-23" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.hevc.encoder.cq" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="217-226" />
+        </MediaCodec>
+    </Encoders>
+    <Decoders>
+        <MediaCodec name="c2.android.avc.decoder" type="video/avc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="304-318" />
+            <Limit name="measured-frame-rate-720x480" range="98-109" />
+            <Limit name="measured-frame-rate-1280x720" range="38-41" />
+            <Limit name="measured-frame-rate-1920x1080" range="20-21" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.h263.decoder" type="video/3gpp" update="true">
+            <Limit name="measured-frame-rate-176x144" range="1373-1489" />
+            <Limit name="measured-frame-rate-352x288" range="1086-1141" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.hevc.decoder" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-352x288" range="344-364" />
+            <Limit name="measured-frame-rate-640x360" range="140-150" />
+            <Limit name="measured-frame-rate-720x480" range="127-138" />
+            <Limit name="measured-frame-rate-1280x720" range="64-73" />
+            <Limit name="measured-frame-rate-1920x1080" range="36-39" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.mpeg4.decoder" type="video/mp4v-es" update="true">
+            <Limit name="measured-frame-rate-176x144" range="1472-1653" />
+            <Limit name="measured-frame-rate-480x360" range="1110-1181" />
+            <Limit name="measured-frame-rate-1280x720" range="249-345" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.vp8.decoder" type="video/x-vnd.on2.vp8" update="true">
+            <Limit name="measured-frame-rate-320x180" range="1000-1018" />
+            <Limit name="measured-frame-rate-640x360" range="464-467" />
+            <Limit name="measured-frame-rate-1280x720" range="127-128" />
+            <Limit name="measured-frame-rate-1920x1080" range="54-55" />
+        </MediaCodec>
+        <MediaCodec name="c2.android.vp9.decoder" type="video/x-vnd.on2.vp9" update="true">
+            <Limit name="measured-frame-rate-320x180" range="823-842" />
+            <Limit name="measured-frame-rate-640x360" range="362-444" />
+            <Limit name="measured-frame-rate-1280x720" range="55-101" />
+            <Limit name="measured-frame-rate-1920x1080" range="104-132" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.avc.decoder" type="video/avc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="625-629" />
+            <Limit name="measured-frame-rate-720x480" range="582-585" />
+            <Limit name="measured-frame-rate-1280x720" range="390-392" />
+            <Limit name="measured-frame-rate-1920x1080" range="194-194" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.avc.decoder.low_latency" type="video/avc" update="true">
+            <Limit name="measured-frame-rate-320x240" range="626-629" />
+            <Limit name="measured-frame-rate-720x480" range="584-586" />
+            <Limit name="measured-frame-rate-1280x720" range="390-392" />
+            <Limit name="measured-frame-rate-1920x1080" range="194-194" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.hevc.decoder" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-352x288" range="694-697" />
+            <Limit name="measured-frame-rate-640x360" range="708-713" />
+            <Limit name="measured-frame-rate-720x480" range="582-584" />
+            <Limit name="measured-frame-rate-1280x720" range="317-317" />
+            <Limit name="measured-frame-rate-1920x1080" range="210-210" />
+            <Limit name="measured-frame-rate-3840x2160" range="55-55" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.hevc.decoder.low_latency" type="video/hevc" update="true">
+            <Limit name="measured-frame-rate-352x288" range="694-697" />
+            <Limit name="measured-frame-rate-640x360" range="711-714" />
+            <Limit name="measured-frame-rate-720x480" range="583-585" />
+            <Limit name="measured-frame-rate-1280x720" range="316-317" />
+            <Limit name="measured-frame-rate-1920x1080" range="210-210" />
+            <Limit name="measured-frame-rate-3840x2160" range="55-55" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.vp9.decoder" type="video/x-vnd.on2.vp9" update="true">
+            <Limit name="measured-frame-rate-320x180" range="570-576" />
+            <Limit name="measured-frame-rate-640x360" range="435-437" />
+            <Limit name="measured-frame-rate-1280x720" range="167-167" />
+            <Limit name="measured-frame-rate-1920x1080" range="89-89" />
+            <Limit name="measured-frame-rate-3840x2160" range="49-49" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.vp9.decoder.low_latency" type="video/x-vnd.on2.vp9" update="true">
+            <Limit name="measured-frame-rate-320x180" range="571-577" />
+            <Limit name="measured-frame-rate-640x360" range="436-437" />
+            <Limit name="measured-frame-rate-1280x720" range="167-167" />
+            <Limit name="measured-frame-rate-1920x1080" range="89-89" />
+            <Limit name="measured-frame-rate-3840x2160" range="49-49" />
+        </MediaCodec>
+    </Decoders>
+</MediaCodecs>

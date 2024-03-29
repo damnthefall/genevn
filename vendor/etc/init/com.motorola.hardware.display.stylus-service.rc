@@ -1,0 +1,4 @@
+service vendor.mot.stylus-hal /vendor/bin/hw/com.motorola.hardware.display.stylus-service
+    class hal
+    user system
+    group system

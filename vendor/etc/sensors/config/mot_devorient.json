@@ -1,0 +1,16 @@
+{
+  "config":
+  {
+    "hw_platform": ["QRD"],
+    "soc_id": ["537"]
+  },
+  "mot_devorient":{
+    "owner": "mot_devorient",
+    ".algo_config":{
+      "owner": "mot_devorient",
+      "flat_gpio_num":{ "type": "int", "ver": "4",
+        "data": "-1"
+      }
+    }
+  }
+}
