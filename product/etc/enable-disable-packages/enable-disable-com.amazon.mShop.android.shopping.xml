@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enable-disable-package>
+    <package-disable-enable-criteria carrierBased="true" package="com.amazon.mShop.android.shopping" default_action="enable">
+        <criteria action="disable" channel="tmo"/>
+    </package-disable-enable-criteria>
+</enable-disable-package>

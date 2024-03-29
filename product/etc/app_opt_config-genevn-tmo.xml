@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    App optimizations device config
+-->
+<app-optimization version="1">
+
+    <devconfig>
+        <thermal-sensor>FUSE_TEMP</thermal-sensor>
+        <profile name="0">0x40804000, 1900, 0x40804100, 1497</profile>
+        <profile name="1">0x40804000, 1900, 0x40804100, 1651</profile>
+        <profile name="2">0x40804000, 2054, 0x40804100, 1497</profile>
+        <profile name="3">0x40804000, 2054, 0x40804100, 1651</profile>
+
+	<!-- SCHEDBOOST resource opcode, value-->
+        <!-- POWER_COLLAPSE_ALL resource opcode, value-->
+        <!-- STORAGE_CLK_SCALING DISABLE resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, MAX value-->
+        <!-- CPUBOOST_MAX_FREQ LITTLE Core resource opcode, MAX value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, MAX value-->
+	<profile name="boost1">0x40C00000, 0x1, 0x42804000, 0x1, 0x40800000, 2054, 0x40800100, 1651</profile>
+        <profile name="boost2">0x40C00000, 0x1, 0x42804000, 0x0, 0x40800000, 2208, 0x40800100, 1804, 0x42C10000, 0x1</profile>
+
+	<profile name="reading">0x40804000, 1900, 0x40804100, 1497</profile>
+        <profile name="navigation">0x40804000, 2054, 0x40804100, 1651</profile>
+        <profile name="video-fps">0x40800000, 1900,  0x40800100, 1497</profile>
+    </devconfig>
+
+    <!-- classified apps -->
+    <optimization name="base_app">
+        <supported-modes>video_mode, video_fullscreen_mode, camera_mode</supported-modes>
+        <limit temp="44" tempClr="41" rr="90"/>
+    </optimization>
+
+    <!-- more actions for thermal control -->
+    <optimization name="device_hot_mode">
+        <limit temp="46" tempClr="44" vol="90"/>
+        <limit temp="47" tempClr="45" vol="70"/>
+    </optimization>
+
+    <optimization name="gts_tool" parent="base_app">
+        <boost profile="boost2"/>
+    </optimization>
+
+    <optimization name="rr_opt_app" parent="base_app">
+        <maxe-profile>normal</maxe-profile>
+        <default-rr>auto</default-rr>
+    </optimization>
+
+    <optimization name="rr_limit_app" parent="rr_opt_app">
+        <limit rr="90"/>
+    </optimization>
+
+    <optimization name="rr_lite_opt_app" parent="base_app">
+        <default-rr>auto</default-rr>
+    </optimization>
+
+    <optimization name="navigation_app" parent="base_app">
+        <boost profile="navigation"/>
+        <default-rr>auto</default-rr>
+        <idle-fps>30</idle-fps>
+        <thermal>gb</thermal>
+    </optimization>
+
+    <optimization name="reading_app" parent="base_app">
+        <boost profile="reading"/>
+        <default-rr>auto</default-rr>
+        <idle-fps>30</idle-fps>
+        <thermal>gb</thermal>
+    </optimization>
+
+    <optimization name="rr_deep_opt_app" parent="rr_opt_app">
+        <boost profile="video-fps"/>
+        <min-fps>30</min-fps>
+    </optimization>
+
+    <optimization name="low_latency_app" parent="base_app">
+        <llm>true</llm>
+        <maxe-profile>llm</maxe-profile>
+    </optimization>
+
+    <optimization name="normal_app" parent="base_app">
+         <maxe-profile>normal</maxe-profile>
+    </optimization>
+
+    <optimization name="heavy_load_app">
+        <boost rr="120" profile="boost2"/>
+        <maxe-profile>heavy_load</maxe-profile>
+        <thermal>perf</thermal>
+    </optimization>
+
+    <optimization name="heavy_load_lite_app">
+        <boost profile="boost1"/>
+        <thermal>perf</thermal>
+    </optimization>
+
+    <optimization name="heavy_load_app_3">
+        <boost profile="boost1"/>
+        <thermal>perf</thermal>
+    </optimization>
+
+    <optimization name="teams_app">
+        <thermal>teams</thermal>
+    </optimization>
+
+    <!-- recognized in-app modes, will merge with app opt at runtime -->
+    <optimization name="video_mode">
+        <limit remove-tag="true"/>
+        <default-rr>auto</default-rr>
+    </optimization>
+
+    <optimization name="video_fullscreen_mode">
+        <default-rr>video</default-rr>
+    </optimization>
+
+    <optimization name="camera_mode">
+        <limit remove-tag="true"/>
+        <default-rr remove-tag="true"/>
+        <thermal>camera</thermal>
+    </optimization>
+
+    <!-- global modes -->
+    <optimization name="glass_mode">
+        <thermal>glass</thermal>
+    </optimization>
+
+    <optimization name="charging_mode">
+        <thermal>charging</thermal>
+    </optimization>
+
+    <optimization name="fast_charging_mode">
+        <thermal>fastc</thermal>
+    </optimization>
+
+    <!-- limit rr to 90 if battery low (<20%), only for normal apps -->
+    <optimization name="battery_low_mode">
+        <limit rr="90" />
+    </optimization>
+
+    <!-- optimizations -->
+    <optimization name="us.zoom.videomeetings" refs="low_latency_app" />
+    <optimization name="com.reddit.frontpage" refs="reading_app" />
+    <optimization name="com.maps.voice.navigation.traffic.gps.location.route.driving.directions" refs="rr_lite_opt_app" />
+    <optimization name="com.baidu.minivideo" refs="rr_lite_opt_app" />
+    <optimization name="com.meitu.meipaimv" refs="rr_lite_opt_app" />
+    <optimization name="com.jvstudios.gpstracker" refs="rr_lite_opt_app" />
+    <optimization name="org.fungo.fungolive" refs="rr_lite_opt_app" />
+    <optimization name="com.yixia.videoeditor" refs="rr_lite_opt_app" />
+    <optimization name="tv.yixia.bobo" refs="rr_lite_opt_app" />
+    <optimization name="com.google.android.exoplayer.gts" refs="gts_tool" />
+    <optimization name="com.microsoft.teams" refs="teams_app" />
+
+</app-optimization>

@@ -1,0 +1,20 @@
+## user 13 T1TGNS33.60-114-5 7d9223 release-keys
+- Manufacturer: motorola
+- Platform: parrot
+- Codename: genevn
+- Brand: motorola
+- Flavor: user
+- Release Version: 13
+- Kernel Version: 5.10.177
+- Id: T1TGNS33.60-114-5
+- Incremental: 7d9223
+- Tags: release-keys
+- CPU Abilist: arm64-v8a,armeabi-v7a,armeabi
+- A/B Device: true
+- Treble Device: true
+- Locale: en-US
+- Screen Density: undefined
+- Fingerprint: motorola/genevn/genevn:12/T1TGNS33.60-114-5/7d9223:user/release-keys
+- OTA version: 
+- Branch: user-13-T1TGNS33.60-114-5-7d9223-release-keys
+- Repo: motorola/genevn

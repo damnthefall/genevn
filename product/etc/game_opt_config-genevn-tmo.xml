@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Game optimizations device config
+-->
+<game-optimization version="1">
+
+    <devconfig>
+        <thermal-sensor>FUSE_TEMP</thermal-sensor>
+        <thermal-hal>maxe</thermal-hal>
+        <!-- should be removed when stable line branch -->
+        <fps-observer>true</fps-observer>
+        <!-- TGPA config-->
+        <tgpa func="1,2,3,4,5,6,7,8" scene="1,2,3" >true</tgpa>
+        <!-- temperatures from low to high -->
+        <temp name="0" temp="0" tempClr="-10"/>
+        <temp name="35" temp="35" tempClr="26"/>
+        <temp name="36" temp="36" tempClr="34"/>
+        <temp name="37" temp="37" tempClr="35"/>
+        <temp name="38" temp="38" tempClr="36"/>
+        <temp name="39" temp="39" tempClr="37"/>
+        <temp name="40" temp="40" tempClr="38"/>
+        <temp name="41" temp="41" tempClr="39"/>
+        <temp name="42" temp="42" tempClr="40"/>
+        <temp name="43" temp="43" tempClr="41"/>
+        <temp name="44" temp="44" tempClr="42"/>
+        <temp name="45" temp="45" tempClr="43"/>
+        <temp name="46" temp="46" tempClr="44"/>
+        <temp name="47" temp="47" tempClr="45"/>
+        <temp name="48" temp="48" tempClr="46"/>
+        <temp name="49" temp="49" tempClr="47"/>
+        <temp name="50" temp="50" tempClr="48"/>
+        <temp name="51" temp="51" tempClr="49"/>
+        <!-- cpu profiles from low to high
+            MAX_FREQ_CLUSTER_LITTLE_CORE_0 = 0x40804100,
+            MIN_FREQ_CLUSTER_LITTLE_CORE_0 = 0x40800100,
+            MAX_FREQ_CLUSTER_BIG_CORE_0 = 0x40804000,
+            MIN_FREQ_CLUSTER_BIG_CORE_0 = 0x40800000,
+            MAX_FREQ_CLUSTER_PRIME_CORE_0 = 0x40804200,
+            MIN_FREQ_CLUSTER_PRIME_CORE_0 = 0x40800200,
+            CORE_CTL_ENABLE_BIG = 0x41008000,
+            CORE_CTL_ENABLE_PRIME  = 0x41008200,
+            ASYMCAP_BOOST = 0x43C00000,
+        -->
+
+        <profile name="0">0x40804000, 1190, 0x40804100, 1113</profile> <!-- 2196 878 2.5-->
+        <profile name="1">0x40804000, 1344, 0x40804100, 1113</profile> <!-- 2277 931 2.45 gn301-->
+        <profile name="2">0x40804000, 1344, 0x40804100, 1324</profile> <!-- 2344 950 2.47 pubg-->
+        <profile name="3">0x40804000, 1497, 0x40804100, 1324</profile> <!-- 2381 983 2.42 pubg-->
+        <profile name="4">0x40804000, 1651, 0x40804100, 1324</profile> <!-- 2591 1145 2.26 gn402-->
+        <profile name="5">0x40804000, 1651, 0x40804100, 1497</profile> <!-- 2604 1159 2.25 pubg-->
+        <profile name="6">0x40804000, 1900, 0x40804100, 1497</profile> <!-- 3010 1540 1.95 nlbr40-->
+        <profile name="7">0x40804000, 1900, 0x40804100, 1651</profile> <!-- 3043 1592 1.91 koh-->
+        <profile name="8">0x40804000, 2054, 0x40804100, 1497</profile> <!-- 3093 1582 1.96 gn454-->
+        <profile name="9">0x40804000, 2054, 0x40804100, 1651</profile> <!-- 3202 1696 1.89 nlbr-->
+        <profile name="10">0x40804000, 2208, 0x40804100, 1804</profile> <!-- 3202 1696 1.89 nlbr-->
+
+	<profile name="nlbr45">0x40804000, 1900, 0x40804100, 1651, 0x42808000, 0x4</profile>
+        <profile name="nlbr40">0x40804000, 1900, 0x40804100, 1497, 0x42808000, 0x4</profile>
+        <profile name="nlbr30">0x40804000, 1651, 0x40804100, 1497, 0x42808000, 0x5</profile>
+
+	<profile name="boost0">0x40C00000, 0x1, 0x42804000, 0x1, 0x40800000, 2054, 0x40800100, 1651</profile>
+	<profile name="boost1">0x40C00000, 0x0, 0x42804000, 0x1, 0x40800000, 2208, 0x40800100, 1804</profile>
+        <profile name="gmg">0x40804100, 1651, 0x40804000, 1651</profile>
+    </devconfig>
+
+    <!-- base game -->
+    <optimization name="base_game" mode="normal">
+        <thermal>gb</thermal>
+        <default-rr>60</default-rr>
+        <llm>true</llm>
+        <limit temp="0" profile="9" />
+        <limit temp="43" profile="8" rr="60"/>
+        <limit temp="45" profile="6" rr="90" fps="45"/>
+        <limit temp="48" profile="4" rr="60" fps="30"/>
+    </optimization>
+    <optimization name="base_game" mode="perf">
+        <thermal>game-perf</thermal>
+        <default-rr>60</default-rr>
+        <llm>true</llm>
+        <limit temp="0" profile="10"/>
+        <limit temp="43" profile="8"/>
+        <limit temp="45" profile="7"/>
+        <limit temp="48" profile="6"/>
+    </optimization>
+    <optimization name="base_game" mode="powersave">
+        <battery-saver>true</battery-saver>
+        <default-rr>60</default-rr>
+        <limit temp="0" profile="5-8" rr="60"/>
+        <limit temp="45" profile="2-4" rr="60" fps="30"/>
+    </optimization>
+
+    <!-- 60fps game -->
+    <optimization name="60fps_game" parent="base_game">
+        <default-rr>60</default-rr>
+    </optimization>
+    <optimization name="60fps_heavy_game" parent="60fps_game">
+        <upmigrate fps="40"/>
+    </optimization>
+
+    <!-- 90fps game -->
+    <optimization name="90fps_game" parent="base_game" mode="normal">
+        <default-rr>90</default-rr>
+        <limit temp="43" profile="9" fps="80"/>
+        <limit temp="45" profile="8" rr="60"/>
+        <limit temp="48" profile="6" rr="90" fps="45"/>
+    </optimization>
+    <optimization name="90fps_game" parent="base_game" mode="perf">
+        <default-rr>90</default-rr>
+    </optimization>
+    <optimization name="90fps_game" parent="base_game" mode="powersave">
+    </optimization>
+    <optimization name="90fps_heavy_game" parent="90fps_game">
+        <upmigrate fps="70"/>
+    </optimization>
+
+    <!-- 120fps game -->
+    <optimization name="120fps_game" parent="base_game" mode="normal">
+        <default-rr>120</default-rr>
+        <limit temp="0" profile="10" />
+        <limit temp="43" profile="8" fps="110"/>
+        <limit temp="45" profile="7" rr="90"/>
+        <limit temp="48" profile="6" rr="60"/>
+    </optimization>
+    <optimization name="120fps_game" parent="base_game" mode="perf">
+        <default-rr>120</default-rr>
+    </optimization>
+    <optimization name="120fps_game" parent="base_game" mode="powersave">
+    </optimization>
+    <optimization name="120fps_heavy_game" parent="120fps_game">
+        <upmigrate fps="100"/>
+    </optimization>
+
+    <!-- restricted game -->
+    <optimization name="60fps_restricted_game" parent="60fps_heavy_game" mode="normal">
+        <limit temp="0" profile="10" />
+        <limit temp="37" profile="9" rr="60" fps="55"/>
+        <limit temp="40" profile="8" rr="90" fps="45"/>
+        <limit temp="42" profile="7" rr="120" fps="40"/>
+        <limit temp="45" profile="6" rr="60" fps="30"/>
+    </optimization>
+    <optimization name="60fps_restricted_game" parent="60fps_heavy_game" mode="perf">
+        <limit temp="0" profile="10" />
+        <limit temp="42" profile="9" rr="60" fps="55"/>
+        <limit temp="44" profile="8" rr="90" fps="45"/>
+        <limit temp="48" profile="7" rr="120" fps="40"/>
+    </optimization>
+    <optimization name="60fps_restricted_game" parent="60fps_heavy_game" mode="powersave">
+        <limit profile="0-3" rr="60" fps="30"/>
+    </optimization>
+
+    <!-- global mini game-->
+    <optimization name="mini_game" parent="base_game" mode="normal">
+        <limit profile="gmg"/>
+    </optimization>
+    <optimization name="mini_game" parent="base_game" mode="perf">
+        <limit profile="gmg"/>
+    </optimization>
+    <optimization name="mini_game" parent="base_game" mode="powersave">
+    </optimization>
+
+    <!-- nlbr game -->
+    <optimization name="nlbr_game" parent="60fps_heavy_game" mode="normal">
+        <limit temp="0" profile="10"/>
+        <limit temp="37" profile="9" rr="60" fps="55"/>
+        <limit temp="40" profile="nlbr45" rr="90" fps="45"/>
+        <limit temp="42" profile="nlbr40" rr="120" fps="40"/>
+        <limit temp="45" profile="nlbr30" rr="60" fps="30"/>
+    </optimization>
+    <optimization name="nlbr_game" parent="60fps_heavy_game" mode="perf">
+        <limit temp="0" profile="10"/>
+        <limit temp="41" profile="8" rr="60" fps="50"/>
+        <limit temp="44" profile="nlbr45" rr="90" fps="45"/>
+        <limit temp="46" profile="nlbr40" rr="120" fps="40"/>
+    </optimization>
+    <optimization name="nlbr_game" parent="60fps_heavy_game" mode="powersave">
+        <limit profile="0-3" rr="60" fps="30"/>
+    </optimization>
+
+    <!-- koh game -->
+    <optimization name="koh_game" parent="60fps_heavy_game" mode="normal">
+        <limit temp="0" profile="10" />
+        <limit temp="43" profile="7" fps="110"/>
+        <limit temp="45" profile="6" rr="90"/>
+        <limit temp="48" profile="4" rr="60"/>
+    </optimization>
+    <optimization name="koh_game" parent="60fps_heavy_game" mode="perf">
+        <limit temp="0" profile="10"/>
+        <limit temp="43" profile="7"/>
+        <boost touch="1" framedrop="10" profile="boost1"/>
+    </optimization>
+    <optimization name="koh_game" parent="60fps_heavy_game" mode="powersave">
+    </optimization>
+
+    <!-- pubg game -->
+    <optimization name="pubg_game" parent="60fps_heavy_game" mode="normal">
+        <limit temp="0" profile="10" />
+        <limit temp="43" profile="3" fps="60"/>
+        <limit temp="45" profile="2" rr="90" fps="45"/>
+    </optimization>
+    <optimization name="pubg_game" parent="60fps_heavy_game" mode="perf">
+        <limit temp="0" profile="10"/>
+        <boost touch="1" framedrop="10" profile="boost1"/>
+    </optimization>
+    <optimization name="pubg_game" parent="60fps_heavy_game" mode="powersave">
+    </optimization>
+
+    <!-- other games -->
+    <optimization name="other_games" parent="base_game">
+    </optimization>
+
+    <optimization name="com.protopop.brightridge" refs="nlbr_game" />
+    <optimization name="com.tencent.tmgp.pubgmhd" refs="pubg_game" />
+    <optimization name="com.tencent.tmgp.sgame" refs="koh_game" />
+    <optimization name="com.tencent.tmgp.sgamece" refs="koh_game" />
+
+   <!-- 90fps game -->
+    <optimization name="com.tencent.ig" refs="90fps_game" />
+    <optimization name="com.nianticlabs.pokemongo" refs="90fps_game" />
+    <optimization name="com.miniclip.eightballpool" refs="90fps_game" />
+    <optimization name="com.mojang.minecraftpe" refs="90fps_game" />
+    <optimization name="com.supercell.brawlstars" refs="90fps_game" />
+    <optimization name="com.kiloo.subwaysurf" refs="90fps_game" />
+    <optimization name="jp.konami.duellinks" refs="90fps_game" />
+    <optimization name="com.com2us.us.smon.smon.normal.normal.freefull.freefull.google.google.kr.kr.android.common" refs="90fps_game" />
+    <optimization name="com.ngame.allstar.eu" refs="90fps_game" />
+    <optimization name="com.lilithgame.roc.gp" refs="90fps_game" />
+    <optimization name="com.bandainamcoent.dblegends_ww" refs="90fps_game" />
+    <optimization name="com.wb.goog.mkx" refs="90fps_game" />
+    <optimization name="com.studiowildcard.wardrumstudios.ark" refs="90fps_game" />
+    <optimization name="com.youmusic.magictiles" refs="90fps_game" />
+    <optimization name="com.ea.game.simcitymobile_row" refs="90fps_game" />
+    <optimization name="com.ea.game.nfs14_row" refs="90fps_game" />
+    <optimization name="com.foxnextgames.m3" refs="90fps_game" />
+    <optimization name="com.pixel.gun3d" refs="90fps_game" />
+    <optimization name="com.netmarble.mherosgb" refs="90fps_game" />
+    <optimization name="com.vectorunit.purple.googleplay" refs="90fps_game" />
+    <optimization name="com.naturalmotion.customstreetracer2" refs="90fps_game" />
+    <optimization name="com.fingersoft.hcr2" refs="90fps_game" />
+    <optimization name="com.sega.sonicdash" refs="90fps_game" />
+    <optimization name="com.bandainamcogames.dbzdokkanww" refs="90fps_game" />
+    <optimization name="com.skgames.trafficrider" refs="90fps_game" />
+    <optimization name="com.ChillyRoom.DungeonShooter" refs="90fps_game" />
+    <optimization name="com.vng.g6.a.zombie" refs="90fps_game" />
+    <optimization name="com.rubygames.assassin" refs="90fps_game" />
+    <optimization name="com.os.airforce" refs="90fps_game" />
+    <optimization name="net.apex_designs.payback2" refs="90fps_game" />
+    <optimization name="com.time.trigger" refs="90fps_game" />
+    <optimization name="com.playgendary.tanks" refs="90fps_game" />
+    <optimization name="com.imangi.templerun2" refs="90fps_game" />
+    <optimization name="com.nekki.shadowfight" refs="90fps_game" />
+    <optimization name="com.ohbibi.fps" refs="90fps_game" />
+    <optimization name="net.wargaming.wot.blitz" refs="90fps_game" />
+    <optimization name="com.nexon.da3.global" refs="90fps_game" />
+    <optimization name="com.nekki.shadowfight3" refs="90fps_game" />
+    <optimization name="com.wb.goog.injustice.brawler2017" refs="90fps_game" />
+    <optimization name="com.klab.bleach" refs="90fps_game" />
+    <optimization name="com.google.earth" refs="90fps_game" />
+    <optimization name="com.auxbrain.egginc" refs="90fps_game" />
+    <optimization name="com.vectorunit.cobalt.googleplay" refs="90fps_game" />
+    <optimization name="com.nintendo.zaba" refs="90fps_game" />
+    <optimization name="com.ea.game.simpsons4_row" refs="90fps_game" />
+    <optimization name="com.computerlunch.evolution" refs="90fps_game" />
+    <optimization name="com.autumn.skullgirls" refs="90fps_game" />
+    <optimization name="com.edkongames.mobs" refs="90fps_game" />
+    <optimization name="com.generagames.resistance" refs="90fps_game" />
+    <optimization name="com.miniclip.plagueinc" refs="90fps_game" />
+    <optimization name="com.halfbrick.dantheman" refs="90fps_game" />
+    <optimization name="com.square_enix.enix.android_googleplay.FFBEWW" refs="90fps_game" />
+    <optimization name="com.srgstudios.inkinc" refs="90fps_game" />
+    <optimization name="com.sega.sprint" refs="90fps_game" />
+    <optimization name="invaders.os.galaxy.space.shooter.attack.classic" refs="90fps_game" />
+    <optimization name="com.jagex.oldscape.android" refs="90fps_game" />
+    <optimization name="com.scopely.headshot" refs="90fps_game" />
+    <optimization name="com.wb.goog.injustice" refs="90fps_game" />
+    <optimization name="com.ea.game.pvz2_na" refs="90fps_game" />
+    <optimization name="com.madfingergames.deadtrigger2" refs="90fps_game" />
+    <optimization name="com.yodo1.rodeo.safari" refs="90fps_game" />
+    <optimization name="com.topchopgames.skyroller" refs="90fps_game" />
+    <optimization name="com.aldagames.zombieshooter" refs="90fps_game" />
+    <optimization name="it.rortos.realflight" refs="90fps_game" />
+    <optimization name="com.nintendo.zara" refs="90fps_game" />
+    <optimization name="com.dogbytegames.offtheroad" refs="90fps_game" />
+    <optimization name="mobi.gameguru.slapkings" refs="90fps_game" />
+    <optimization name="com.ubisoft.dragonfire" refs="90fps_game" />
+    <optimization name="com.sega.sonicboomandroid" refs="90fps_game" />
+    <optimization name="com.halfbrick.jetpackjoyride" refs="90fps_game" />
+    <optimization name="com.zeptolab.cats.google" refs="90fps_game" />
+    <optimization name="com.namcobandaigames.pacmantournaments" refs="90fps_game" />
+    <optimization name="com.n3twork.legendary" refs="90fps_game" />
+    <optimization name="com.asanteegames.magicrampage" refs="90fps_game" />
+    <optimization name="com.panzerdog.tacticool" refs="90fps_game" />
+    <optimization name="com.carxtech.carxdr2" refs="90fps_game" />
+    <optimization name="com.zeptolab.bulletecho.google" refs="90fps_game" />
+    <optimization name="com.tencent.godgame" refs="90fps_game" />
+    <optimization name="com.fancyforce.happywheels" refs="90fps_game" />
+    <optimization name="com.stx.pullhimout" refs="90fps_game" />
+    <optimization name="com.sadpuppy.lemmings" refs="90fps_game" />
+    <optimization name="com.turner.pocketmorties" refs="90fps_game" />
+    <optimization name="com.junesoftware.maskgun" refs="90fps_game" />
+    <optimization name="com.madfingergames.legends" refs="90fps_game" />
+    <optimization name="com.halfbrick.fruitninjafree" refs="90fps_game" />
+    <optimization name="com.futureplay.battleground" refs="90fps_game" />
+    <optimization name="net.froemling.bombsquad" refs="90fps_game" />
+    <optimization name="com.zeptolab.omnomrun.google" refs="90fps_game" />
+    <optimization name="com.sega.sonic1px" refs="90fps_game" />
+    <optimization name="com.dragonest.autochess.google" refs="90fps_game" />
+    <optimization name="com.nintendo.zaga" refs="90fps_game" />
+    <optimization name="com.devsisters.gb" refs="90fps_game" />
+    <optimization name="com.netmarble.lin2ws" refs="90fps_game" />
+    <optimization name="com.ea.games.r3_na" refs="90fps_game" />
+    <optimization name="com.hyperbeard.adorablehome" refs="90fps_game" />
+    <optimization name="com.jagex.runescape.android" refs="90fps_game" />
+    <optimization name="com.garena.game.codm" refs="90fps_game" />
+    <optimization name="com.zeptolab.thieves.google" refs="90fps_game" />
+    <optimization name="com.ea.game.simpsons4_na" refs="90fps_game" />
+    <optimization name="com.ubisoft.hungrydragon" refs="90fps_game" />
+    <optimization name="com.supertapx.lovedots" refs="90fps_game" />
+    <optimization name="com.squareenix.relicrun" refs="90fps_game" />
+    <optimization name="fi.twomenandadog.walkmaster" refs="90fps_game" />
+    <optimization name="com.makingfun.mageandminions" refs="90fps_game" />
+    <optimization name="info.flowersoft.theotown.theotown" refs="90fps_game" />
+    <optimization name="com.perfect.slices" refs="90fps_game" />
+    <optimization name="com.madfingergames.unkilled" refs="90fps_game" />
+    <optimization name="com.ragequitgames.evillands" refs="90fps_game" />
+    <optimization name="com.gameloft.android.ANMP.GloftPOHM" refs="90fps_game" />
+    <optimization name="com.zigzagame.evertale" refs="90fps_game" />
+    <optimization name="offline" refs="90fps_game" />
+    <optimization name="com.flaregames.zgs" refs="90fps_game" />
+    <optimization name="com.ninjakiwi.btdadventuretime" refs="90fps_game" />
+    <optimization name="com.ketchapp.ballz" refs="90fps_game" />
+    <optimization name="com.ubisoft.accovenant" refs="90fps_game" />
+    <optimization name="com.ubisoft.raymanadventures" refs="90fps_game" />
+    <optimization name="io.anuke.mindustry" refs="90fps_game" />
+    <optimization name="com.lionstudios.mrninja" refs="90fps_game" />
+    <optimization name="com.blayzegames.iosfps" refs="90fps_game" />
+    <optimization name="com.superevilmegacorp.game" refs="90fps_game" />
+    <optimization name="com.blackpanther.ninjaarashi" refs="90fps_game" />
+    <optimization name="com.zynga.boggle" refs="90fps_game" />
+    <optimization name="com.playdigious.deadcells.mobile" refs="90fps_game" />
+    <optimization name="com.glu.deerhunt16" refs="90fps_game" />
+    <optimization name="com.armorgames.sodadungeon2" refs="90fps_game" />
+    <optimization name="com.king.solgard" refs="90fps_game" />
+    <optimization name="com.netease.chiji" refs="90fps_game" />
+    <optimization name="com.ndemiccreations.rebelinc" refs="90fps_game" />
+    <optimization name="com.zutgames.ilovehue" refs="90fps_game" />
+    <optimization name="com.frogmind.badlandbrawl" refs="90fps_game" />
+    <optimization name="com.prineside.tdi2" refs="90fps_game" />
+    <optimization name="com.bluewizard.f13puzzle" refs="90fps_game" />
+    <optimization name="com.harvest.android.gr" refs="90fps_game" />
+    <optimization name="com.rope.cut" refs="90fps_game" />
+    <optimization name="com.bushiroad.en.bangdreamgbp" refs="90fps_game" />
+    <optimization name="com.BeresnevGames.Knife" refs="90fps_game" />
+    <optimization name="com.ubisoft.mightyquest" refs="90fps_game" />
+    <optimization name="com.valvesoftware.underlords" refs="90fps_game" />
+    <optimization name="com.nexon.maplem.global" refs="90fps_game" />
+    <optimization name="com.ubisoft.redlynx.trialsfrontier.ggp" refs="90fps_game" />
+    <optimization name="ballz.magiplay.bricks.breaker.ballz.balls.bounce.puzzle" refs="90fps_game" />
+    <optimization name="com.zenga.mypatience" refs="90fps_game" />
+    <optimization name="com.idle.digging" refs="90fps_game" />
+    <optimization name="com.rappidstudios.simulatorbattlephysics" refs="90fps_game" />
+    <optimization name="com.sidheinteractive.sif.DR" refs="90fps_game" />
+    <optimization name="com.sybogames.brim" refs="90fps_game" />
+    <optimization name="com.kiarygames.tinyroom" refs="90fps_game" />
+    <optimization name="com.gezellig.roadcrash" refs="90fps_game" />
+    <optimization name="ru.azurinteractive.robotwarfare" refs="90fps_game" />
+    <optimization name="com.pixelbite.ga2" refs="90fps_game" />
+    <optimization name="com.overthetopgames.fancypants" refs="90fps_game" />
+    <optimization name="com.my.ffs.action.bombasticbrothers" refs="90fps_game" />
+    <optimization name="jp.pokemon.pokemoncafemix" refs="90fps_game" />
+    <optimization name="com.zeptolab.ctr2.f2p.google" refs="90fps_game" />
+    <optimization name="com.togglegear.game.hexonia" refs="90fps_game" />
+    <optimization name="com.dpspace.rocketsky" refs="90fps_game" />
+    <optimization name="com.balysv.loop" refs="90fps_game" />
+    <optimization name="com.kleientertainment.doNotStarvePocket" refs="90fps_game" />
+    <optimization name="com.HuaYiGame.DeliveryFromThePain" refs="90fps_game" />
+    <optimization name="com.edengames.GTSpirit" refs="90fps_game" />
+    <optimization name="com.gameloft.android.ANMP.GloftMVHM" refs="90fps_game" />
+    <optimization name="com.bitgate.curseofaros" refs="90fps_game" />
+    <optimization name="com.actgames.fcigl" refs="90fps_game" />
+    <optimization name="com.direlight.grimvalor" refs="90fps_game" />
+    <optimization name="com.mgc.rope.hero" refs="90fps_game" />
+    <optimization name="com.joxdev.orbia" refs="90fps_game" />
+    <optimization name="com.paradoxplaza.kopp2" refs="90fps_game" />
+    <optimization name="com.byv.theships" refs="90fps_game" />
+    <optimization name="com.martinmagni.mekorama" refs="90fps_game" />
+    <optimization name="com.artifexmundi.balefire" refs="90fps_game" />
+    <optimization name="com.tapanywhere.laseroverload" refs="90fps_game" />
+    <optimization name="eu.bandainamcoent.pacman256" refs="90fps_game" />
+    <optimization name="com.zplay.Mrbow" refs="90fps_game" />
+    <optimization name="com.jds.binr" refs="90fps_game" />
+    <optimization name="com.flaregames.nonstop.action.rpg" refs="90fps_game" />
+    <optimization name="com.gamefox.somnus" refs="90fps_game" />
+    <optimization name="nz.co.codepoint.minimetro" refs="90fps_game" />
+    <optimization name="com.com2us.us.golfstarworldtour.golfstarworldtour.normal.normal.freefull.freefull.google.google.global.global.android.common" refs="90fps_game" />
+    <optimization name="com.zeptolab.ctrm.free.google" refs="90fps_game" />
+    <optimization name="com.azurgames.sailships" refs="90fps_game" />
+    <optimization name="com.bistudio.minidayz" refs="90fps_game" />
+    <optimization name="com.tutapp.idlezombies" refs="90fps_game" />
+    <optimization name="com.halfbrick.boosterraiders" refs="90fps_game" />
+    <optimization name="com.fundayfactory.bl" refs="90fps_game" />
+    <optimization name="com.oneworld.ef5.x" refs="90fps_game" />
+    <optimization name="com.toppluva.grandmountain" refs="90fps_game" />
+    <optimization name="com.mobge.Oddmar" refs="90fps_game" />
+    <optimization name="com.gameloft.android.ANMP.GloftINHM" refs="90fps_game" />
+    <optimization name="com.playCog.bulletBender" refs="90fps_game" />
+    <optimization name="com.rappidstudios.simulatorbattle" refs="90fps_game" />
+    <optimization name="vn.com.hikergames.fpsfreeze" refs="90fps_game" />
+    <optimization name="com.JESoftware.LastHopeTD" refs="90fps_game" />
+    <optimization name="com.FDGEntertainment.Oceanhorn.gp" refs="90fps_game" />
+    <optimization name="com.luckykat.plant" refs="90fps_game" />
+    <optimization name="com.pinestreetcodeworks.TinyBubbles" refs="90fps_game" />
+    <optimization name="com.sega.streetsofrage2" refs="90fps_game" />
+    <optimization name="com.HomeNetGames.SpaceCommander" refs="90fps_game" />
+    <optimization name="com.zeptolab.omnommerge.google" refs="90fps_game" />
+    <optimization name="jp.konami.mo.pvt.aww" refs="90fps_game" />
+    <optimization name="com.dogbytegames.offroadlegends2" refs="90fps_game" />
+    <optimization name="com.hutchgames.smashbandits" refs="90fps_game" />
+    <optimization name="com.xchange.talesrush" refs="90fps_game" />
+    <optimization name="com.pixeltoys.freeblade" refs="90fps_game" />
+    <optimization name="fluddokt.opsu.android" refs="90fps_game" />
+    <optimization name="com.superbitmachine.armajet" refs="90fps_game" />
+    <optimization name="com.nomadgames.everybodyrpgpay" refs="90fps_game" />
+    <optimization name="com.shinybox.smash" refs="90fps_game" />
+    <optimization name="com.coldsoda.smashingrush" refs="90fps_game" />
+    <optimization name="com.squareenixmontreal.lcgo" refs="90fps_game" />
+    <optimization name="com.squareenixmontreal.lcgo" refs="90fps_game" />
+    <optimization name="com.dotemu.titanquest" refs="90fps_game" />
+    <optimization name="com.limbic.towermadness2" refs="90fps_game" />
+    <optimization name="com.NamcoNetworks.MsPacManDemo" refs="90fps_game" />
+    <optimization name="com.rawfury.kingdom2crowns" refs="90fps_game" />
+    <optimization name="com.tinytouchtales.cardthief" refs="90fps_game" />
+    <optimization name="com.habby.flamingcore" refs="90fps_game" />
+    <optimization name="com.stormx.eggtycoon" refs="90fps_game" />
+    <optimization name="com.telltalegames.batman200" refs="90fps_game" />
+    <optimization name="com.hidea.manorvampire" refs="90fps_game" />
+    <optimization name="com.overthetopgames.nyxquest" refs="90fps_game" />
+    <optimization name="com.Dani.Balls" refs="90fps_game" />
+    <optimization name="mobi.gameguru.crayonepoxy" refs="90fps_game" />
+    <optimization name="com.herocraft.spacewolf" refs="90fps_game" />
+    <optimization name="com.pivotgames.puzzleaquarium2.gp" refs="90fps_game" />
+    <optimization name="com.square_enix.enix.android_google.ffxvpe" refs="90fps_game" />
+    <optimization name="com.EtherGaming.PocketRogues" refs="90fps_game" />
+    <optimization name="com.catsbit.sandbox3d" refs="90fps_game" />
+    <optimization name="com.telltalegames.fables100" refs="90fps_game" />
+    <optimization name="zombie.shooting.dead.city" refs="90fps_game" />
+    <optimization name="com.luckykat.kaijurush" refs="90fps_game" />
+    <optimization name="com.vectorunit.silver.googleplay" refs="90fps_game" />
+    <optimization name="com.leagueofgeeks.armello" refs="90fps_game" />
+    <optimization name="com.kleientertainment.doNotStarveShipwrecked" refs="90fps_game" />
+    <optimization name="com.CubeSoftware.SpaceConflictGame" refs="90fps_game" />
+    <optimization name="com.camouflaj.republique" refs="90fps_game" />
+    <optimization name="com.luckykat.doodledunk" refs="90fps_game" />
+    <optimization name="com.lalapp.gloryagessamurais" refs="90fps_game" />
+    <optimization name="com.zenstudios.ZenPinball" refs="90fps_game" />
+    <optimization name="org.openttd.sdl" refs="90fps_game" />
+    <optimization name="com.sega.mega" refs="90fps_game" />
+    <optimization name="com.swordman.reforged" refs="90fps_game" />
+    <optimization name="air.com.shirogames.evoland12" refs="90fps_game" />
+    <optimization name="com.noodlecake.pumped3" refs="90fps_game" />
+    <optimization name="com.neoul.angelsfantasy" refs="90fps_game" />
+    <optimization name="com.blust.fivearrows" refs="90fps_game" />
+    <optimization name="com.bulbware.poopdieandroid" refs="90fps_game" />
+    <optimization name="doodlegod" refs="90fps_game" />
+    <optimization name="com.luckykat.beatstreet" refs="90fps_game" />
+    <optimization name="com.luckykat.icecreamroll" refs="90fps_game" />
+    <optimization name="com.grandcru.battlejack" refs="90fps_game" />
+    <optimization name="doodlegodfree2" refs="90fps_game" />
+    <optimization name="com.squareenixmontreal.hitmango" refs="90fps_game" />
+    <optimization name="com.byril.alchemy" refs="90fps_game" />
+    <optimization name="com.pixelbite.xwt" refs="90fps_game" />
+    <optimization name="com.lojugames.games.transmission" refs="90fps_game" />
+    <optimization name="dk.houseonfire.android.thesilentage" refs="90fps_game" />
+    <optimization name="com.asmodeedigital.onirim" refs="90fps_game" />
+    <optimization name="com.gamania.lineagem" refs="90fps_game" />
+    <optimization name="com.avalon.caveonline.global.googleplay" refs="90fps_game" />
+    <optimization name="com.tuesdayquest.myplanet" refs="90fps_game" />
+    <optimization name="com.mobirix.dragonstone" refs="90fps_game" />
+    <optimization name="com.luckykat.grumpycat" refs="90fps_game" />
+    <optimization name="com.com2us.us.wondertactics.wondertactics.normal.normal.freefull.freefull.google.google.global.global.android.common" refs="90fps_game" />
+    <optimization name="com.hutchgames.smashcopsheat" refs="90fps_game" />
+    <optimization name="com.snappytouch.subterfuge" refs="90fps_game" />
+    <optimization name="com.waybefore.fastlikeafox" refs="90fps_game" />
+    <optimization name="com.noodlecake.chameleonrun" refs="90fps_game" />
+    <optimization name="com.crescentmoongames.subdivision" refs="90fps_game" />
+    <optimization name="com.msykit.Stg1u" refs="90fps_game" />
+    <optimization name="com.squareenixmontreal.deusexgo" refs="90fps_game" />
+    <optimization name="com.noodlecake.farmpunks" refs="90fps_game" />
+    <optimization name="com.azurinteractive.StarForces" refs="90fps_game" />
+    <optimization name="com.guildsoftware.vendetta" refs="90fps_game" />
+    <optimization name="com.magmamobile.game.Squadron2" refs="90fps_game" />
+    <optimization name="com.triadastudio.shadowmatic" refs="90fps_game" />
+    <optimization name="com.miHoYo.bh3tw" refs="90fps_game" />
+    <optimization name="com.blackelement.dronewar_goo" refs="90fps_game" />
+    <optimization name="jp.co.taito.groovecoasterzero" refs="90fps_game" />
+    <optimization name="com.midlandStory.SwordMaker" refs="90fps_game" />
+    <optimization name="com.okidokico.okgolf" refs="90fps_game" />
+    <optimization name="com.magmamobile.game.Squadron" refs="90fps_game" />
+    <optimization name="com.lalapp.waytoslay" refs="90fps_game" />
+    <optimization name="com.e1cog.spacerangerslegacy" refs="90fps_game" />
+    <optimization name="com.lemonjam.intomirror" refs="90fps_game" />
+    <optimization name="com.lalapp.slashofsword" refs="90fps_game" />
+    <optimization name="com.msykit.Stg1x2g" refs="90fps_game" />
+    <optimization name="com.bitegginc.deflector" refs="90fps_game" />
+    <optimization name="com.headupgames.dubdash" refs="90fps_game" />
+    <optimization name="com.luckykat.slice" refs="90fps_game" />
+    <optimization name="no.krillbite.mosaic.blipblop" refs="90fps_game" />
+    <optimization name="fi.bugbyte.battleprequel" refs="90fps_game" />
+    <optimization name="com.stencyl.bigshotboxing" refs="90fps_game" />
+    <optimization name="com.extremedevelopers.spacejet" refs="90fps_game" />
+    <optimization name="com.indie.dev.survivalderby" refs="90fps_game" />
+    <optimization name="com.heigames.nomcat" refs="90fps_game" />
+    <optimization name="slamdunk.basketball.game" refs="90fps_game" />
+    <optimization name="com.outerminds.h3h3" refs="90fps_game" />
+    <optimization name="com.msykit.Stg1x1g" refs="90fps_game" />
+    <optimization name="com.noodlecake.bugbutcher" refs="90fps_game" />
+    <optimization name="com.roguesnail.starvikings" refs="90fps_game" />
+    <optimization name="com.halfbrick.WobbleDrop" refs="90fps_game" />
+    <optimization name="jp.co.taito.am.dariusBurstSP" refs="90fps_game" />
+    <optimization name="com.supermegaquest.ancestor" refs="90fps_game" />
+    <optimization name="org.riseintime.riseintime" refs="90fps_game" />
+    <optimization name="com.gzl.stardunk" refs="90fps_game" />
+    <optimization name="com.firepunchd.chickenjump" refs="90fps_game" />
+    <optimization name="com.gamespire.photonstrike" refs="90fps_game" />
+    <optimization name="com.ModernProgramming.AntiPong.Android" refs="90fps_game" />
+    <optimization name="jp.co.taito.raystorm" refs="90fps_game" />
+    <optimization name="com.noodlecake.caterzillar" refs="90fps_game" />
+    <optimization name="com.eightfloor.matchville.f2p.googleplay" refs="90fps_game" />
+    <optimization name="com.SK.SnowSlide" refs="90fps_game" />
+    <optimization name="com.beatshapers.rcsoccer" refs="90fps_game" />
+    <optimization name="com.rudeware.breaknecksoccer1" refs="90fps_game" />
+    <optimization name="team.Artmic.DokdoDefenceCommand" refs="90fps_game" />
+    <optimization name="co.witls.blopblop" refs="90fps_game" />
+    <optimization name="com.Molney.ShootingStars" refs="90fps_game" />
+    <optimization name="com.flames.warfair" refs="90fps_game" />
+    <optimization name="SW_Tech" refs="90fps_game" />
+    <optimization name="com.riotgames.league.teamfighttacticstw" refs="90fps_game" />
+    <optimization name="com.activision.callofduty.shooter" refs="90fps_game" />
+    <optimization name="com.vectorunit.redcmgeplaycn" refs="90fps_game" />
+    <!--
+    ACF control solitaire and woodoku
+    <optimization name="com.tripledot.solitaire" refs="mini_game" />
+    <optimization name="com.tripledot.woodoku" refs="mini_game" />
+    -->
+    <optimization name="com.king.candycrushsaga" refs="mini_game" />
+    <optimization name="com.king.candycrushsodasaga" refs="mini_game" />
+    <optimization name="in.playsimple.tripcross" refs="mini_game" />
+    <optimization name="in.playsimple.wordtrip" refs="mini_game" />
+</game-optimization>

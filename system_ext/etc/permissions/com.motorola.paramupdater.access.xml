@@ -1,0 +1,5 @@
+<permissions>
+   <permission name="com.motorola.permission.ACCESS_MOT_PARAM">
+       <!--group gid="camera" /-->
+   </permission>
+</permissions>

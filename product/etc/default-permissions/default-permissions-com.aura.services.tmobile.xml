@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<exceptions>
+    <exception package="com.aura.services.tmobile">
+        <permission name="android.permission.POST_NOTIFICATIONS" fixed="false" whitelisted="false"/>
+        <permission name="android.permission.READ_PHONE_NUMBERS" fixed="false" whitelisted="false"/>
+    </exception>
+</exceptions>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<permissions>
+    <!-- feature for preload the ReadyForService. -->
+    <feature name="com.motorola.readyforservice" />
+
+    <!-- feature for show qs from the ReadyForService. -->
+    <feature name="com.motorola.readyforservice.qs" />
+</permissions>
+

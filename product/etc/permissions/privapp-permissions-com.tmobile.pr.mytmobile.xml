@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<permissions>
+    <privapp-permissions package="com.tmobile.pr.mytmobile">
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="com.tmobile.comm.RECEIVE_METRICS"/>
+        <permission name="com.tmobile.pr.mytmobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+    </privapp-permissions>
+</permissions>

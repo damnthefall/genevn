@@ -1,0 +1,4 @@
+# Disable eSIM UI for Opportunistic DS
+masterclear.allow_retain_esim_profiles_after_fdr=false
+esim.enable_esim_system_ui_by_default=false
+ro.setupwizard.esim_cid_ignore=0x0032,0x0000

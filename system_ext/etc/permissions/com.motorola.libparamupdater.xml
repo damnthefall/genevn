@@ -1,0 +1,3 @@
+<permissions>
+     <library name="com.motorola.libparamupdater" file="/system_ext/framework/com.motorola.libparamupdater.jar" />
+</permissions>

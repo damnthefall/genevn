@@ -1,0 +1,232 @@
+# common initialization
+on post-fs
+    # LMK
+    setprop ro.lmk.kill_heaviest_task true
+    setprop ro.lmk.file_low_percentage 30
+    setprop ro.lmk.pgscan_limit 3000
+    setprop ro.lmk.swap_free_low_percentage 10
+    setprop ro.lmk.file_high_percentage 70
+    setprop ro.lmk.swap_util_max 90
+    setprop ro.lmk.thrashing_limit 50
+    setprop ro.lmk.min_thrashing_limit 10
+    setprop ro.lmk.thrashing_limit_decay 25
+    setprop ro.lmk.thrashing_limit_critical 50
+    setprop ro.lmk.threshold_decay 50
+    setprop ro.lmk.psi_complete_stall_ms 150
+    setprop ro.lmk.psi_partial_stall_ms 50
+    setprop ro.lmk.filecache_min_kb 300000
+    setprop ro.lmk.kill_timeout_ms 100
+    setprop ro.lmk.stall_accelerated_decay 10
+    setprop ro.lmk.stall_accelerated_limit 40
+    setprop persist.lmk.debug true
+    setprop ro.lmk.camera_boost 1
+    #LMK 3.0
+    setprop ro.lmk.use_moto_strategy true
+    setprop ro.lmk.kswapd_limit 90
+    setprop ro.lmk.freeze_min_adj 0
+    setprop ro.lmk.stall_limit_freeze 8
+    setprop ro.lmk.critical_min_adj 201
+    setprop ro.lmk.stall_limit_critical 4
+    setprop ro.lmk.medium_min_adj 920
+    # App compactor
+    setprop ro.config.use_compaction true
+    setprop ro.config.compact_bootcompleted true
+    setprop ro.config.compact_post_boot true
+    setprop ro.config.compact_action_1 4
+    setprop ro.config.compact_action_2 2
+    setprop ro.config.compact_procstate_throttle 11,18
+    # Zram
+    setprop ro.vendor.zram.product_swapon true
+    setprop ro.zram.mark_idle_delay_mins 60
+    setprop ro.zram.first_wb_delay_mins 1440
+    setprop ro.zram.periodic_wb_delay_hours 24
+    write /sys/block/zram0/comp_algorithm lz4
+    write /proc/sys/vm/swappiness 100
+    setprop sys.sysctl.swappiness 100
+    # boost
+    setprop persist.sys.perf_fwk_enabled true
+    setprop persist.sys.allow_aosp_hints true
+    # boot kill
+    setprop ro.config.no_kill_duration_post_boot 0
+    # Enable freezer
+    setprop ro.config.use_freezer true
+    # Promote recent UI procs
+    setprop persist.sys.aitune_promote_recent_ui_procs true
+    setprop persist.sys.aitune_promote_important_apps true
+    # Disable Process pool
+    setprop persist.device_config.runtime_native.usap_pool_enabled false
+    # dex2pro
+    setprop persist.sys.dex2pro_enabled true
+    setprop persist.sys.dex2pro_art_version 331314010
+    # sf boot
+    setprop debug.sf.boost_sf_on_touch true
+    # max starting in bg, can be 1 in low ram device.
+    setprop ro.config.max_starting_bg 8
+    # use psi avg10 for mempressure in fwk to avoid ping-pong.
+    setprop ro.config.use_psi_avg10_for_mempressure true
+    # delay longer for service restart, will be rescheduled immediately once mempressure backing to normal.
+    setprop ro.config.svc_restart_delay_on_moderate_mem 3600000
+    setprop ro.config.svc_restart_delay_on_low_mem 3600000
+    setprop ro.config.svc_restart_delay_on_critical_mem 3600000
+
+# Enable App compactor for 4~6G RAM
+on  post-fs && property:ro.vendor.hw.ram=4GB
+    setprop dalvik.vm.dex2oat-threads 6
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5
+    setprop dalvik.vm.heapstartsize 8m
+    setprop dalvik.vm.heapgrowthlimit 256m
+    setprop dalvik.vm.heapsize 512m
+    setprop dalvik.vm.heaptargetutilization 0.75
+    setprop dalvik.vm.heapminfree 512k
+    setprop dalvik.vm.heapmaxfree 8m
+    # bg service
+    setprop persist.sys.fw.bservice_age 5000
+    setprop persist.sys.fw.bservice_limit 5
+    setprop persist.sys.fw.bservice_enable false
+    setprop persist.sys.fw.use_trim_settings true
+    setprop persist.sys.fw.empty_app_percent 50
+    setprop persist.sys.fw.trim_empty_percent 100
+    setprop persist.sys.fw.trim_cache_percent 100
+    setprop persist.sys.fw.trim_enable_memory 1073741824
+    # config the threashold of quick launch
+    setprop persist.sys.aitune_preload_threshold_mb 2300
+    # audio protection
+    setprop persist.sys.aitune_audio_monitor true
+    setprop persist.sys.aitune_audio_monitor_adj 51
+    setprop ro.config.compact_action_1 2
+    setprop ro.lmk.stall_limit_medium 0
+on  post-fs && property:ro.vendor.hw.ram=6GB
+    setprop dalvik.vm.dex2oat-threads 6
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5
+    setprop dalvik.vm.heapstartsize 8m
+    setprop dalvik.vm.heapgrowthlimit 256m
+    setprop dalvik.vm.heapsize 512m
+    setprop dalvik.vm.heaptargetutilization 0.75
+    setprop dalvik.vm.heapminfree 4m
+    setprop dalvik.vm.heapmaxfree 24m
+    setprop ro.config.compact_action_1 4
+    setprop ro.lmk.stall_limit_medium 1
+on  post-fs && property:ro.vendor.hw.ram=8GB
+    setprop dalvik.vm.dex2oat-threads 6
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5
+    setprop dalvik.vm.heapstartsize 16m
+    setprop dalvik.vm.heapgrowthlimit 256m
+    setprop dalvik.vm.heapsize 512m
+    setprop dalvik.vm.heaptargetutilization 0.75
+    setprop dalvik.vm.heapminfree 6m
+    setprop dalvik.vm.heapmaxfree 32m
+    setprop ro.config.compact_action_1 4
+    setprop ro.lmk.stall_limit_medium 1
+
+on property:sys.boot_completed=1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor walt
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor walt
+    write /dev/cpuset/restricted/cpus 0-3
+
+on early-init
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor performance
+
+on init
+    mkdir /dev/cpuset/power-daemon
+    copy /dev/cpuset/cpus /dev/cpuset/power-daemon/cpus
+    copy /dev/cpuset/mems /dev/cpuset/power-daemon/mems
+    chown system system /dev/cpuset/power-daemon
+    chown system system /dev/cpuset/power-daemon/tasks
+    chown system system /dev/cpuset/power-daemon/cgroup.procs
+    chmod 0664 /dev/cpuset/power-daemon/tasks
+    chmod 0664 /dev/cpuset/power-daemon/cgroup.procs
+    write /dev/cpuset/power-daemon/cpus 0-7
+    write /dev/cpuset/power-daemon/tasks 153
+    write /dev/cpuset/power-daemon/tasks 154
+
+# Screen off
+on property:debug.tracing.screen_state="1"
+    write /dev/cpuset/power-daemon/cpus 0-3
+
+# Screen on
+on property:debug.tracing.screen_state="2"
+    write /dev/cpuset/power-daemon/cpus 0-7
+
+on property:sys.boot_completed=1 && property:ro.vendor.zram.product_swapon=true
+    trigger sys-boot-completed-set
+
+on sys-boot-completed-set && property:persist.sys.zram_wb_enabled=false
+    swapon_all /vendor/etc/fstab.qcom.zram
+on sys-boot-completed-set && property:persist.sys.zram_wb_enabled=true
+    swapon_all /vendor/etc/fstab.qcom.zramwb
+
+# Enable Zram writeback for 6~8G RAM on PRC
+on property:persist.sys.zram_wb_enabled="" && property:ro.product.is_prc=""
+    setprop persist.sys.zram_wb_enabled false
+on property:ro.vendor.hw.ram=6GB && property:persist.sys.zram_wb_enabled="" && property:ro.product.is_prc="true"
+    setprop persist.sys.zram_wb_enabled true
+on property:ro.vendor.hw.ram=8GB && property:persist.sys.zram_wb_enabled="" && property:ro.product.is_prc="true"
+    setprop persist.sys.zram_wb_enabled true
+on property:ro.vendor.hw.ram=12GB && property:persist.sys.zram_wb_enabled="" && property:ro.product.is_prc="true"
+    setprop persist.sys.zram_wb_enabled false
+# Set Zram writeback size for 6~12G RAM
+on property:ro.vendor.hw.ram=4GB && property:persist.sys.zram_wb_size=""
+    setprop persist.sys.zram_wb_size 1024M
+on property:ro.vendor.hw.ram=6GB && property:persist.sys.zram_wb_size=""
+    setprop persist.sys.zram_wb_size 1536M
+on property:ro.vendor.hw.ram=8GB && property:persist.sys.zram_wb_size="" && property:ro.product.is_prc=""
+    setprop persist.sys.zram_wb_size 2048M
+on property:ro.vendor.hw.ram=8GB && property:persist.sys.zram_wb_size="" && property:ro.product.is_prc="true"
+    setprop persist.sys.zram_wb_size 3072M
+on property:ro.vendor.hw.ram=12GB && property:persist.sys.zram_wb_size=""
+    setprop persist.sys.zram_wb_size 3072M
+
+# Tune Swap readahead on ufs 3.1
+# 0 when zram wb was disabled
+# 4 when zram wb was enabled, it should be fine tuned on each ufs/emmc.
+# Note: readahead will only be applied on writeback pages.
+on property:sys.boot_completed=1 && property:persist.sys.zram_wb_enabled=false
+    write /proc/sys/vm/page-cluster 0
+on property:sys.boot_completed=1 && property:persist.sys.zram_wb_enabled=true
+    write /proc/sys/vm/page-cluster 4
+
+# Tune Max bg apps
+on property:ro.vendor.hw.ram=4GB && property:persist.sys.zram_wb_enabled=false
+    setprop ro.MAX_HIDDEN_APPS 20
+on property:ro.vendor.hw.ram=6GB && property:persist.sys.zram_wb_enabled=false
+    setprop ro.MAX_HIDDEN_APPS 40
+on property:ro.vendor.hw.ram=8GB && property:persist.sys.zram_wb_enabled=false
+    setprop ro.MAX_HIDDEN_APPS 48
+on property:ro.vendor.hw.ram=12GB && property:persist.sys.zram_wb_enabled=false
+    setprop ro.MAX_HIDDEN_APPS 60
+on property:ro.vendor.hw.ram=4GB && property:persist.sys.zram_wb_enabled=true
+    setprop ro.MAX_HIDDEN_APPS 48
+on property:ro.vendor.hw.ram=6GB && property:persist.sys.zram_wb_enabled=true
+    setprop ro.MAX_HIDDEN_APPS 60
+on property:ro.vendor.hw.ram=8GB && property:persist.sys.zram_wb_enabled=true
+    setprop ro.MAX_HIDDEN_APPS 80
+on property:ro.vendor.hw.ram=12GB && property:persist.sys.zram_wb_enabled=true
+    setprop ro.MAX_HIDDEN_APPS 80
+
+on property:persist.vendor.camera.mot.dropcaches=*
+    setprop vendor.sys.vm.dropcaches ${persist.vendor.camera.mot.dropcaches}
+
+on property:vendor.sys.vm.dropcaches=*
+    write /proc/sys/vm/drop_caches ${vendor.sys.vm.dropcaches}
+
+on property:ro.product.cpu.abi=arm64-v8a
+    setprop dalvik.vm.dex2oat64.enabled true
+
+on boot
+    #MotoBtAptxMode
+    setprop persist.mot_bt.qss_cert true
+    #bt stack
+    setprop persist.vendor.btstack.qhs_enable true
+    #LHDC
+    setprop persist.mot_bt.lhdc_enable true
+    #le scan interval & window downgrade
+    setprop persist.mot_bt.le_scan_interval_downgrade true
+    #le batch scan threshold report disable
+    setprop persist.mot_bt.le_scan_batch_threshold_disable true
+
+# IKSWT-173133 - Set anr timeout of InputDispatch to 10s for userdebug build and low mem device
+on property:ro.build.type=userdebug
+    setprop persist.sys.dispatch_timeout_multiplier 2
+on property:ro.build.type=user && property:ro.vendor.hw.ram=4GB
+    setprop persist.sys.dispatch_timeout_multiplier 2

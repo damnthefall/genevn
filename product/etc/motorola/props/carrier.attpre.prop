@@ -1,0 +1,3 @@
+persist.vendor.rcs.singlereg.feature=1
+ro.mot.enable_android.hardware.telephony.ims.singlereg=true
+
